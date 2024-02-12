@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # this script produces a pdb with bfactors altered to reflect distance to another pdb.
 # Mike Strauss Aug 2013
-# modified, June 2023 - output bfactor inverse to distance (10-dist)
+# modified, June 2023 - output bfactor reverse to distance (10-dist)
 #
 """
 run either as script by changing file names in here, or
