@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # this script produces a pdb with bfactors altered to reflect distance to another pdb.
 # Mike Strauss Aug 2013
-# modified, June 2023 - output bfactor reverse to distance (10-dist)
+# modified, June 2023 - output bfactor inverse to distance (10-dist)
+# modified, Mar 2024 - to work with more pdb types
 #
 """
 run either as script by changing file names in here, or
@@ -21,6 +22,8 @@ def clean(x): return x!=''
 def distance(p1,p2):
     d=sqrt((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2 + (p1[2]-p2[2])**2)
     return d
+
+#def pdb_strip()
 
 def get_pdb(document) :
 	doct=open(document,'r')
@@ -43,9 +46,10 @@ def pdb_to_list(file_in):
     lines = readfile.readlines()
     print(len(lines))
     i = 0
+    atms = ["HETATM", "ATOM  "]
     pdf_list=[]
     for line in lines:
-        if len(line) >= 55:
+        if line[0:6] in atms:
             line = line[:-1]
             label = line[0:6]
             atnum = int(line[6:12])
@@ -129,6 +133,6 @@ else:
 
 for ea in in_fils:
     i1=ea
-      o1=os.path.basename(i1).rstrip(".pdb")+"_within"+str(rad2)+".pdb"
+    o1=os.path.basename(i1).rstrip(".pdb")+"_within"+str(rad2)+".pdb"
     bfact_by_dist(i1,r1,o1,rad2)
  
